@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c094782b-0c26-4b2a-b221-7f3281c76d26" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Superuser/convert_timestamps_to_csv_from_xls.m" beforeDir="false" afterPath="$PROJECT_DIR$/../Superuser/convert_timestamps_to_csv_from_xls.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Superuser/import_behavior_timestamps_to_database.m" beforeDir="false" afterPath="$PROJECT_DIR$/../Superuser/import_behavior_timestamps_to_database.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utilities/Statistics/confusion_matrix_stats.m" beforeDir="false" afterPath="$PROJECT_DIR$/../Utilities/Statistics/confusion_matrix_stats.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Workflows/+Analysis_workflow/private/response_decoding.m" beforeDir="false" afterPath="$PROJECT_DIR$/../Workflows/+Analysis_workflow/private/response_decoding.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Workflows/+Registration_workflow/prepare_data_for_segmentation.m" beforeDir="false" afterPath="$PROJECT_DIR$/../Workflows/+Registration_workflow/prepare_data_for_segmentation.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Workflows/Miniscope_workflow/sessionAlignment/runAlignment.m" beforeDir="false" afterPath="$PROJECT_DIR$/../Workflows/Miniscope_workflow/sessionAlignment/runAlignment.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decoding/get_confusion_matrix_decoding.py" beforeDir="false" afterPath="$PROJECT_DIR$/decoding/get_confusion_matrix_decoding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Figures_paper_FMP/_figures/Submission/figure4/fig4_cluster_awake_data.m" beforeDir="false" afterPath="$PROJECT_DIR$/../../Figures_paper_FMP/_figures/Submission/figure4/fig4_cluster_awake_data.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Figures_paper_SNI_anxiety/_data/SELECTIVITY_stats__p.mat" beforeDir="false" afterPath="$PROJECT_DIR$/../../Figures_paper_SNI_anxiety/_data/SELECTIVITY_stats__p.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Figures_paper_SNI_anxiety/_data/confusion_matrices_all_cells.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../Figures_paper_SNI_anxiety/_data/confusion_matrices_all_cells.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Figures_paper_SNI_anxiety/_figures/fig1_overlap_selectivity.m" beforeDir="false" afterPath="$PROJECT_DIR$/../../Figures_paper_SNI_anxiety/_figures/fig1_overlap_selectivity.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Figures_paper_SNI_anxiety/_figures/fig3_decoding_confusion_matrix.m" beforeDir="false" afterPath="$PROJECT_DIR$/../../Figures_paper_SNI_anxiety/_figures/fig3_decoding_confusion_matrix.m" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1nhRhLn918xhN6INUbf0meBQrX9" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../ProgramData/Anaconda/envs/voltammetry/python.exe" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="python" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="python" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.get_confusion_matrix_decoding">
+    <configuration name="decode_activations_same_day" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/decode_activations_same_day.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="detect_activations_old_p_0_05" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/decoding" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/decoding/detect_activations_old_p_0_05.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="detect_activations_plot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/detect_activations_plot.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="get_confusion_matrix_decoding" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/decoding" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/decoding/get_confusion_matrix_decoding.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.get_confusion_matrix_decoding" />
+        <item itemvalue="Python.detect_activations_old_p_0_05" />
+        <item itemvalue="Python.decode_activations_same_day" />
+        <item itemvalue="Python.detect_activations_plot" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c094782b-0c26-4b2a-b221-7f3281c76d26" name="Default Changelist" comment="" />
+      <created>1611840455019</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611840455019</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/decoding/get_confusion_matrix_decoding.py</url>
+          <line>77</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/detect_activations_plot.py</url>
+          <line>81</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/decode_activations_same_day.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
