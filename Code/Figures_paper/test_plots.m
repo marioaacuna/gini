@@ -34,7 +34,7 @@ opts.SelectedVariableNames = Variables;
 T = readtable( input_file,opts);
 % opts.SelectedVariableNames = 'Label';
 % L = readtable(input_file,opts);
-threshold = GC.throshold_depth_L5; % Thomas' paper
+threshold = GC.threshold_depth_L5; % Thomas' paper
 T(T.Depth < threshold, :) =[];
 %% Select variables to plot
 

@@ -32,7 +32,7 @@ T = readtable( input_file,opts);
 opts.SelectedVariableNames = 'Label';
 % L = readtable(input_file,opts);
 % data_csv = readmatrix('M:\Mario\Gini\dataset_Ma.csv');
-threshold = GC.throshold_depth_L5; % Thomas' paper
+threshold = GC.threshold_depth_L5; % Thomas' paper
 T(T.Depth < threshold, :) =[];
 
 init_conds = GC.init_conds.CFA;
