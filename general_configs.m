@@ -20,7 +20,7 @@ function GC = general_configs()
     GC.python.scripts_path = fullfile(GC.repository_root_path, 'Code', 'python');
     % For data analysis of CFA data
     GC.threshold_depth_L5 = 300;
-    GC.variables_to_discard = {'Date', 'Slice', 'ID', 'Burst'}; % , 'Burst', 'ICAmp'
+    GC.variables_to_discard = { 'Date', 'Slice', 'ID', 'Burst'}; % , 'Burst', 'ICAmp'
     GC.init_conds.CFA = {'Saline', 'CFA'};
     GC.init_tps.CFA = {'d1', 'd7', 'd7NS'};
 

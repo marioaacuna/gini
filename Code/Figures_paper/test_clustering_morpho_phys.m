@@ -55,6 +55,9 @@ else
     T = T(in_idx,:);
 end
 T_new = T;
+% For some reason this didn't work on excel
+T_new.ICAmp(isnan(T_new.ICAmp))= 0;
+
 original_labels = T_new.Label;
 % response = categorical(original_labels);
 response = double(ismember(original_labels, {'b'}));
@@ -254,13 +257,13 @@ acc_no_imp_feat = acc_no_imp_feat.avg_accuracy;
 
 %% Plot Classification
 mymap = [1 1 1
-    1 0 0
-    0.5 1 0
-    0 1 0.5
-    0 0 1
-    ];
+        1 0 0
+        0.5 1 0
+        0 1 0.5
+        0 0 1
+        ];
 
-fig_classify = figure('pos', [50 50 2200 800]);
+fig_classify = figure('pos', [50 50 600 200]);
 subplot(1,2,1)
 heat = heatmap(CM, 'Colormap', mymap);
 heat.XDisplayLabels = {'b', 'a'};
