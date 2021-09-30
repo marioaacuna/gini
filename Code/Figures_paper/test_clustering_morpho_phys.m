@@ -73,15 +73,22 @@ data_csv = table2array(table_2_csv);
 imp = predictorImportance(tree_1);
 %
 figure_predictors = figure('Color','w');
-bar(imp);
+[imp_sorted, sorted_idx] = sort(imp, 'ascend');
+is_zero = imp_sorted==0;
+estimates = imp_sorted(~is_zero);
+norm_estimates = estimates / max(estimates);
+barh(norm_estimates);
 title('Predictor Importance Estimates');
-ylabel('Estimates');
-xlabel('Predictors');
+xlabel('Estimates');
+ylabel('Predictors');
 h = gca;
-xticks([1:length( tree_1.PredictorNames)])
-h.XTickLabel = tree_1.PredictorNames;
-h.XTickLabelRotation = 45;
+pred_names = tree_1.PredictorNames(sorted_idx);
+pred_names = pred_names(~is_zero);
+yticks([1:length( pred_names)])
+h.YTickLabel = pred_names;
+% h.XTickLabelRotation = 45;
 h.TickLabelInterpreter = 'none';
+box off
 if save_figs
     fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_predictors.pdf');
 %     print -dpdf -painters fig_filename
@@ -155,14 +162,15 @@ end
     
 % [~,C] = kmeans(data_to_clusters,2)
 %%
-%%
-num_important_features= sum(imp>1*std(imp));
+%% Removing the most important features
+num_important_features= sum(imp>2*std(imp));
 [~, idx] = maxk(imp, num_important_features);
 predictors = tree_1.PredictorNames(idx);
+new_predictors = tree_1.PredictorNames(~ismember(tree_1.PredictorNames, predictors));
 opts2 = detectImportOptions(input_file);
-opts2.SelectedVariableNames = predictors;
+opts2.SelectedVariableNames = new_predictors;
 
-T_new_round = T_new(:,predictors);
+T_new_round = T_new(:,new_predictors);
 % data_csv_new = table2array(T_new);
 
 % [rows, ~]= find(isnan(data_csv_new));
@@ -223,7 +231,56 @@ if save_figs
 end
 
 
-%% Classification analysis
+%% Classification analysis using all the features
+toggle_toolbox('MVPA-Light-master', 'on')
+GC_MVPA = general_configs_MVPA;
+cfg =  GC_MVPA;
+cfg.classifier = 'naive_bayes';
+%% Run classification
+labels = strcmp(original_labels, 'b');
+perf  = mv_classify(cfg, data_csv, labels);
+CM = perf{2};
+acc = confusion_matrix_stats(CM);
+acc = acc.avg_accuracy;
+
+%% Run classification to data without important features
+
+perf  = mv_classify(cfg, data_csv_new, labels);
+CM_no_imp_feat = perf{2};
+acc_no_imp_feat = confusion_matrix_stats(CM_no_imp_feat);
+acc_no_imp_feat = acc_no_imp_feat.avg_accuracy;
+
+
+
+%% Plot Classification
+mymap = [1 1 1
+    1 0 0
+    0.5 1 0
+    0 1 0.5
+    0 0 1
+    ];
+
+fig_classify = figure('pos', [50 50 2200 800]);
+subplot(1,2,1)
+heat = heatmap(CM, 'Colormap', mymap);
+heat.XDisplayLabels = {'b', 'a'};
+heat.YDisplayLabels = {'b', 'a'};
+title({['Classification accuracy: ', num2str(acc)]; 'Original features'});
 disp('done')
+
+subplot(1,2,2)
+heat = heatmap(CM_no_imp_feat, 'Colormap', mymap);
+heat.XDisplayLabels = {'b', 'a'};
+heat.YDisplayLabels = {'b', 'a'};
+title({['Classification accuracy: ', num2str(acc_no_imp_feat)]; 'Removing features'});
+disp('done')
+%%
+if save_figs
+     fig_filename = os.path.join(GC.plot_path, type_experiment,'_Classification_a_b.pdf');  
+     saveas(fig_classify,fig_filename)
+     close(fig_classify)
+end
+toggle_toolbox('MVPA-Light-master', 'off')
+
 
 end

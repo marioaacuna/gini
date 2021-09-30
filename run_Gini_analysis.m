@@ -30,9 +30,9 @@ function run_Gini_analysis()
     % Update input data
     inputdata = readtable(os.path.join(GC.data_root_path, 'Book1.xlsx'), 'Sheet', 'takeme');
     writetable(inputdata, os.path.join(GC.raw_data_folder, 'input.xlsx'))
-    
+     answer = inputdlg('what experimental group? (S/C)');
     if strcmp(to_do_all_plots{1}, 'y')
-        answer = inputdlg('what experimental group? (S/C)');
+       
         type_experiment = answer{1};
         test_plots(type_experiment);
     end
