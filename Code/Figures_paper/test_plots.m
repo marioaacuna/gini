@@ -57,12 +57,15 @@ end
     
     
 
-these_variables = {'Label','MaxH',  'MaxV', 'MaxH_1' , 'MaxV_1', 'MaxOrder','Depth'};
+% these_variables = {'Label','MaxH',  'MaxV', 'MaxH_1' , 'MaxV_1', 'MaxOrder','Depth'};
+these_variables = Variables;
 data = T(:,ismember(fieldnames(T), these_variables));
 is_b = ismember(T.Label, 'b') & data.Depth > threshold;
 is_a = ~ismember(T.Label, 'b') &  data.Depth > threshold;
 
-
+% For some reason adding yeros to where is nan is not possible in excel
+data.ICAmp(isnan(data.ICAmp))= 0;
+T.ICAmp(isnan(T.ICAmp))= 0;
 GS_all_mean = groupsummary(T, {'Experiment', 'Label'}, 'mean', 'IncludeMissingGroups', false);
 GS_all_std = groupsummary(T, {'Experiment', 'Label'}, 'std', 'IncludeMissingGroups', false);
 
