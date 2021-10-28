@@ -68,7 +68,7 @@ tree_1 = fitrtree(T_new(:,~ismember(T_new.Properties.VariableNames, {'Label', 'E
 % view(tree_1,'Mode','graph')
 table_2_csv = T_new(:,~ismember(T_new.Properties.VariableNames, {'Label', 'Experiment'}));
 data_csv = table2array(table_2_csv);
-
+isnan_idx = (sum(isnan(table2array(table_2_csv)), 2)>0);
 %%
 imp = predictorImportance(tree_1);
 %
@@ -90,12 +90,18 @@ h.YTickLabel = pred_names;
 h.TickLabelInterpreter = 'none';
 box off
 if save_figs
-    fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_predictors.pdf');
+%     fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_predictors.pdf');
 %     print -dpdf -painters fig_filename
 %     export_fig(fig_filename, figure_predictors); close(figure_predictors);
 % hgexport(figure_predictors,fig_filename); %Set desired file name
-    saveas(figure_predictors,fig_filename)
-    close(figure_predictors)
+%     saveas(figure_predictors,fig_filename)
+%     close(figure_predictors)
+    
+  
+    fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_predictors.pdf');
+    export_fig(fig_filename, '-pdf', '-q101', '-nocrop', '-painters',figure_predictors); close(figure_predictors)
+
+    
 end
 %%
 % remove NaNs
@@ -153,12 +159,62 @@ axis square
 
 if save_figs
      fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_dim_red.pdf');  
-     saveas(figure_dim_red,fig_filename)
-     close(figure_dim_red)
+%      saveas(figure_dim_red,fig_filename)
+%      close(figure_dim_red)
+
+    export_fig(fig_filename, '-pdf', '-q101', '-nocrop', '-painters',figure_dim_red); close(figure_dim_red)
+
+     
+end
+
+
+% calculate centroids using k-means
+n_k = length(names); % a and b
+[clusters_idx, C] = kmeans(data_to_clusters, n_k, 'Distance','sqeuclidean', ...
+    'Replicates',5);
+
+labels_idx = ismember(original_labels, 'b');
+labels_idx= double(labels_idx);
+labels_idx(labels_idx == 0) = 2;
+% cm = confusionchart(clusters_idx, labels_idx);
+% cm_statts = confusion_matrix_stats(cm.NormalizedValues);
+
+mismatch_neurons = find(clusters_idx~=labels_idx);
+isnot_nan_idx = find(~isnan_idx); % relate that to the original labels
+
+% Plot the idx of the mistmatch neurons
+
+original_mismatch_idx = isnot_nan_idx(mismatch_neurons);
+
+figure_mistmatch =  figure('color', 'w', 'pos',[100, 100, 600, 600]);
+h = gscatter(data_to_clusters(:,1), data_to_clusters(:,2), original_labels) ; title(type_dim_red);
+names = {h.DisplayName};
+
+is_b = strcmp(names, 'b');
+set(h(is_b), 'Color', FP.colors.groups.b)
+set(h(~is_b), 'Color', FP.colors.groups.a)
+labelsx= [type_dim_red,'-1'];
+labelsy= [type_dim_red,'-2'];
+xlabel(labelsx)
+ylabel(labelsy)
+axis square
+hold on
+text(data_to_clusters(:,1), data_to_clusters(:,2), num2str(isnot_nan_idx))
+hold off
+
+
+if save_figs
+     fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_dim_red_with_idx.pdf');  
+%      saveas(figure_dim_red,fig_filename)
+%      close(figure_dim_red)
+
+    export_fig(fig_filename, '-pdf', '-q101', '-nocrop', '-painters',figure_mistmatch); close(figure_mistmatch)
 
 end
-    
-    
+
+%%
+
+
     
 % [~,C] = kmeans(data_to_clusters,2)
 %%
@@ -226,8 +282,10 @@ title(['Only taking ', num2str(num_important_features), ' important features'])
 
 if save_figs
      fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_dim_red_only_important_f.pdf');  
-     saveas(fig_dim_red_imp_fea,fig_filename)
-     close(fig_dim_red_imp_fea)
+%      saveas(fig_dim_red_imp_fea,fig_filename)
+%      close(fig_dim_red_imp_fea)
+    export_fig(fig_filename, '-pdf', '-q101', '-nocrop', '-painters',fig_dim_red_imp_fea); close(fig_dim_red_imp_fea)
+
 end
 
 
@@ -253,32 +311,37 @@ acc_no_imp_feat = acc_no_imp_feat.avg_accuracy;
 
 
 %% Plot Classification
-mymap = [1 1 1
-    1 0 0
-    0.5 1 0
-    0 1 0.5
-    0 0 1
+mymap = [0, 0.427, 0.467
+    0.514 0.773 0.745
+    0.929 0.965 0.976
+    1 0.867 0.824
+    0.886 0.584 0.471
     ];
 
 fig_classify = figure('pos', [50 50 2200 800]);
 subplot(1,2,1)
-heat = heatmap(CM, 'Colormap', mymap);
+heat = heatmap(100 * CM, 'Colormap', mymap);
 heat.XDisplayLabels = {'b', 'a'};
 heat.YDisplayLabels = {'b', 'a'};
+caxis([0 100])
 title({['Classification accuracy: ', num2str(acc)]; 'Original features'});
 disp('done')
 
 subplot(1,2,2)
-heat = heatmap(CM_no_imp_feat, 'Colormap', mymap);
+heat = heatmap(100 * CM_no_imp_feat, 'Colormap', mymap);
 heat.XDisplayLabels = {'b', 'a'};
 heat.YDisplayLabels = {'b', 'a'};
+caxis([0 100])
 title({['Classification accuracy: ', num2str(acc_no_imp_feat)]; 'Removing features'});
 disp('done')
 %%
 if save_figs
      fig_filename = os.path.join(GC.plot_path, type_experiment,'_Classification_a_b.pdf');  
-     saveas(fig_classify,fig_filename)
-     close(fig_classify)
+%      saveas(fig_classify,fig_filename)
+%      close(fig_classify)
+
+     export_fig(fig_filename, '-pdf', '-q101', '-nocrop', '-painters',fig_classify); close(fig_classify)
+
 end
 toggle_toolbox('MVPA-Light-master', 'off')
 

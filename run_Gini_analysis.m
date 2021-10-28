@@ -30,12 +30,14 @@ function run_Gini_analysis()
     % Update input data
     inputdata = readtable(os.path.join(GC.data_root_path, 'Book1.xlsx'), 'Sheet', 'takeme');
     writetable(inputdata, os.path.join(GC.raw_data_folder, 'input.xlsx'))
-     answer = inputdlg('what experimental group? (S/C)');
+    answer = inputdlg('what experimental group? (S/C)');
+    type_experiment = answer{1};
     if strcmp(to_do_all_plots{1}, 'y')
-       
-        type_experiment = answer{1};
         test_plots(type_experiment);
+    elseif strcmp(to_do_all_plots{1}, 'n')
+         disp('You are skipping the analysis of features')
     end
+  
     
     to_do_cluster_plots  = inputdlg('Do you wanna plot the clustering?(y/n)');
     if strcmp(to_do_cluster_plots{1}, 'y')
