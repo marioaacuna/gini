@@ -332,7 +332,7 @@ mymap = [41, 87, 120
 131,197,190
 0,109,119] ./ 255;
 
-fig_classify = figure('pos', [50 50 600 200]);
+fig_classify = figure('pos', [50 50 1800 600]);
 subplot(1,2,1)
 heat = heatmap(100 * CM, 'Colormap', mymap);
 heat.XDisplayLabels = {'b', 'a'};
