@@ -21,6 +21,10 @@ function GC = general_configs()
     % For data analysis of CFA data
     GC.threshold_depth_L5 = 300;
     GC.variables_to_discard = { 'Date', 'Slice', 'ID', 'Burst'}; % , 'Burst', 'ICAmp'
+    GC.variables_to_evaluate = {'Depth', 'Bifurcation', 'Polarity','Perimeter','Area','Diameter', 'Measured',...
+                            'MaxH', 'MaxV','Den', 'MaxH_1', 'MaxV_1', 'Angle', 'MaxOrder',  'Oblique', 'SAG',...
+                             'SAGAmp', 'InputR', 'RMP', 'APThreshold', 'Tau', 'Adaptation', 'APAmplitude', 'APHW',...
+                             'VeloDepo', 'VelRepo','ICAmp',  'Burst'};
     GC.init_conds.CFA = {'Saline', 'CFA'};
     GC.init_tps.CFA = {'d1', 'd7', 'd7NS'};
 

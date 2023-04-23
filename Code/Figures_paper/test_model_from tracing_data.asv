@@ -1,0 +1,122 @@
+global GC
+GC = general_configs();
+% read table
+table_filename = fullfile(GC.raw_data_folder, 'Retro_ACC_PAG.xlsx');
+% input_file =  'M:\Mario\Gini\dataset.xlsx'; % from 2019 dataset
+opts = detectImportOptions(table_filename);
+
+
+parameters = opts.VariableNames;
+variables_to_discard = GC.variables_to_discard;%{'Date', 'Slice', 'ID', 'Burst'}; % , 'Burst', 'ICAmp'
+% Variables = parameters(~ismember(parameters, variables_to_discard)); 
+
+
+% opts.SelectedVariableNames = Variables;
+
+%T = readtable( table_filename,opts);
+T = readtable(table_filename);
+opts.SelectedVariableNames = 'Label';
+
+% get neurons only in L5
+% L = readtable(input_file,opts);
+% data_csv = readmatrix('M:\Mario\Gini\dataset_Ma.csv');
+threshold = GC.threshold_depth_L5; % Thomas' paper
+T(T.Depth < threshold, :) =[];
+
+T_new = T;
+% For some reason this didn't work on excel
+T_new.ICAmp(isnan(T_new.ICAmp))= 0;
+
+T_new.Burst(isnan(T_new.Burst)) = 0;
+
+original_labels = T_new.Label;
+% response = categorical(original_labels);
+response = double(ismember(original_labels, 1));
+
+
+% Run a tree classifier to determine the important variables
+tree_1 = fitrtree(T_new(:,~ismember(T_new.Properties.VariableNames, {'Label', 'Experiment'})), response,'PredictorSelection','curvature','Surrogate','on');
+%% Plot figure importance
+imp = predictorImportance(tree_1);
+%
+figure_predictors = figure('Color','w');
+[imp_sorted, sorted_idx] = sort(imp, 'ascend');
+is_zero = imp_sorted==0;
+estimates = imp_sorted(~is_zero);
+norm_estimates = estimates / max(estimates);
+barh(norm_estimates);
+title('Predictor Importance Estimates');
+xlabel('Estimates');
+ylabel('Predictors');
+h = gca;
+pred_names = tree_1.PredictorNames(sorted_idx);
+pred_names = pred_names(~is_zero);
+yticks([1:length( pred_names)])
+h.YTickLabel = pred_names;
+% h.XTickLabelRotation = 45;
+h.TickLabelInterpreter = 'none';
+box off
+
+
+%% get new values
+% addpath(GC.raw_data_folder)
+input_file = os.path.join(GC.raw_data_folder, 'Only_saline_data.xlsx');
+% input_file =  'M:\Mario\Gini\dataset.xlsx'; % from 2019 dataset
+opts = detectImportOptions(input_file);
+
+parameters = opts.VariableNames;
+variables_to_discard = GC.variables_to_discard;%{'Date', 'Slice', 'ID', 'Burst'}; % , 'Burst', 'ICAmp'
+Variables = parameters(~ismember(parameters, variables_to_discard)); 
+% Variables = parameters(ismember(parameters, {'SAG', 'Diameter'}));
+
+opts.SelectedVariableNames = parameters;
+
+%dtable( input_file,opts);
+T=readtable(input_file);
+opts.SelectedVariableNames = 'Label';
+% L = readtable(input_file,opts);
+% data_csv = readmatrix('M:\Mario\Gini\dataset_Ma.csv');
+threshold = GC.threshold_depth_L5; % Thomas' paper
+T(T.Depth < threshold, :) =[];
+T.ICAmp(isnan(T_new.ICAmp))= 0;
+T.Burst(isnan(T_new.Burst)) = 0;
+
+
+%T(:,[1,2]) = [];
+vars_new = opts.VariableNames(:,~ismember(opts.VariableNames,{'Label','Date', 'Experiment', 'Slice', 'ID', 'IInj', 'SpikeCount', 'Burst'}));
+
+vars_to_eval = intersect(vars_new  , T_new.Properties.VariableNames);
+T_eval = T(:, vars_to_eval);
+pred_T_eval = T.Label;
+pred_T_eval = double(ismember(pred_T_eval  , 'b'));
+%T_eval = [T_eval, table(pred_T_eval, 'VariableNames',{'response'})]
+% delete nan values
+isnan_idx = (sum(isnan(table2array(T_eval)), 2)>0);
+T_eval(isnan_idx,:) = [];
+pred_T_eval(isnan_idx) =[];
+%% Train a model, or load pre-trained model
+keyboard
+% save model
+%save(fullfile(GC.raw_data_folder, 'NaiveBayes_MDL_23_3_classes.mat'), 'mdl_23_3_classes')
+% load model
+mdl = load_variable(fullfile(GC.raw_data_folder,'models', 'NaiveBayes_MDL_24.mat'), 'mdl_24'); % NaiveBayes_MDL_24; NaiveBayes_MDL_23_3_classes
+mdl = load_variable(fullfile(GC.raw_data_folder,'models', 'NaiveBayes_MDL_23_3_classes.mat'), 'mdl_23_3_classe'); % NaiveBayes_MDL_24; NaiveBayes_MDL_23_3_classes
+% use the GUI
+T_use = T_new(:,vars_to_eval);
+[yfit,~] = mdl.predictFcn(T_eval);
+%%
+figure
+c = confusionchart(pred_T_eval, yfit,"Normalization","row-normalized");
+acc = confusion_matrix_stats(c.NormalizedValues); acc=acc.avg_accuracy;
+title(['ACC: ', num2str(acc)])
+
+
+
+
+
+
+
+
+
+
+
