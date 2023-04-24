@@ -2,14 +2,15 @@ function GC = general_configs()
     GC = struct();
     %%
     main_root = 'M:\Mario';
-    GC.data_root_path = [main_root,'\Gini'];
-    GC.raw_data_folder = [main_root,'\Gini\Data']; % to be changed if table is placed somewhere else
+    % GC.data_root_path = [main_root,'\Gini'];
+    % GC.raw_data_folder = [main_root,'\Gini\Data']; % to be changed if table is placed somewhere else
     GC.plot_path = [main_root,'\Gini\plots'];
     % Get path of this file
     current_path = mfilename('fullpath');
     % Remove filename to get root path of the repository
     repository_root_path = regexp(current_path, filesep(), 'split');
     GC.repository_root_path = fullfile(repository_root_path{1:end-1});
+    GC.data_root_path = fullfile(GC.repository_root_path, 'Data/');
     GC.toolboxes_root_path = fullfile(GC.repository_root_path, 'Code', '3rd party toolboxes');
     GC.forbidden_folders = {'Superuser', '\.', '3rd party toolboxes', 'Documentation', 'python', '_test'};  % This list will be passed to regexp (make sure special characters are properly escaped)
     % Python
