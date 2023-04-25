@@ -19,7 +19,7 @@ close all
 %% Init variables
 save_fig = 0 ;
 save_predictors = 1;
-n_predictors = 3;
+n_predictors = 2;
 FP = figure_properties();
 type_experiment = 'retro';
 
@@ -105,7 +105,7 @@ figure, gscatter(Indexes, repmat(1, size(Indexes)), response, [], 'o')
 
 % Calculate the ROC from indexes
 % Calculate true positive rate (TPR) and false positive rate (FPR) for different threshold values
-nThresholds = 100; % Number of threshold values to evaluate
+nThresholds = 1000; % Number of threshold values to evaluate
 thresholds = linspace(min(Indexes), max(Indexes), nThresholds); % Generate a range of threshold values
 idx2 = Indexes((response==1));
 idx1 = Indexes((response==0));
@@ -270,9 +270,9 @@ end
 % threshold_max_sep = thresholds(min_idx); % Threshold that maximizes separation
 % 
 % THR_AUROC = threshold_max_sep;
-% %% CALCULATE AUROC FROM SAG
-% % Calculate the ROC
-% % Calculate true positive rate (TPR) and false positive rate (FPR) for different threshold values
+%% CALCULATE AUROC FROM SAG
+% Calculate the ROC
+% Calculate true positive rate (TPR) and false positive rate (FPR) for different threshold values
 % nThresholds = 100; % Number of threshold values to evaluate
 % thresholds = linspace(min(T_new.SAG), max(T_new.SAG), nThresholds); % Generate a range of threshold values
 % idx2 = T_new.SAG((response==1));
@@ -313,14 +313,14 @@ end
 % threshold_max_sep = thresholds(min_idx); % Threshold that maximizes separation
 % 
 % THR_AUROC_SAG = threshold_max_sep;
-% 
-% % % save predictors and threshold
-% % predictors_filename = fullfile(GC.raw_data_folder, 'out', 'predictor_weights.mat');
-% % predictors = struct();
-% % predictors.wights = best_pred_vals;
-% % predictors.names = best_predictors;
-% % predictors.threshold = THR_AUROC;
-% % save(predictors_filename, 'predictors')
+
+% % save predictors and threshold
+% predictors_filename = fullfile(GC.raw_data_folder, 'out', 'predictor_weights.mat');
+% predictors = struct();
+% predictors.wights = best_pred_vals;
+% predictors.names = best_predictors;
+% predictors.threshold = THR_AUROC;
+% save(predictors_filename, 'predictors')
 % % 
 % 
 % 

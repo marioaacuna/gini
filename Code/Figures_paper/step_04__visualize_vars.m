@@ -4,6 +4,7 @@
 clear, clc
 global GC
 %%
+r = 1; % type of neuron (1 , 0)
 table_filename = fullfile(GC.raw_data_folder,'out', "input_with_predicted_lables.xlsx");
 % Read table
 T = readtable(table_filename);
@@ -33,8 +34,8 @@ nrows = 2;
 for i_var = 1:length(vars_to_eval)
     try
         this_var = vars_to_eval{i_var};
-        ex1 = table2array(T(ismember(T.Experiment,experiments{1}) & response ==1, this_var));
-        ex2 = table2array(T(ismember(T.Experiment,experiments{2}) & response ==1, this_var));
+        ex1 = table2array(T(ismember(T.Experiment,experiments{1}) & response ==r, this_var));
+        ex2 = table2array(T(ismember(T.Experiment,experiments{2}) & response ==r, this_var));
         % do stats
         [~, p]=ttest2(ex2, ex1);
         subplot(nrows, ncols, i_var)
@@ -62,8 +63,8 @@ nrows = 2;
 for i_var = 1:length(vars_to_eval)
     try
         this_var = vars_to_eval{i_var};
-        ex1 = table2array(T(ismember(T.Experiment,experiments{1}) & response ==1, this_var));
-        ex2 = table2array(T(ismember(T.Experiment,experiments{2}) & response ==1, this_var));
+        ex1 = table2array(T(ismember(T.Experiment,experiments{1}) & response ==r, this_var));
+        ex2 = table2array(T(ismember(T.Experiment,experiments{2}) & response ==r, this_var));
         % do stats
         [~, p]=ttest2(ex2, ex1);
         subplot(nrows, ncols, i_var)
@@ -91,8 +92,8 @@ nrows = 2;
 for i_var = 1:length(vars_to_eval)
     try
         this_var = vars_to_eval{i_var};
-        ex1 = table2array(T(ismember(T.Experiment,experiments{1}) & response ==1, this_var));
-        ex2 = table2array(T(ismember(T.Experiment,experiments{2}) & response ==1, this_var));
+        ex1 = table2array(T(ismember(T.Experiment,experiments{1}) & response ==r, this_var));
+        ex2 = table2array(T(ismember(T.Experiment,experiments{2}) & response ==r, this_var));
         % do stats
         [~, p]=ttest2(ex2, ex1);
         subplot(nrows, ncols, i_var)
