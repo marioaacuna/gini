@@ -109,4 +109,31 @@ for i_var = 1:length(vars_to_eval)
     end
 end
 
+%%
+experiments = {'Saline d7NS',...
+            'CFA d7NS'};
+% Plot
+f1 = figure('Position',[0 0 2500 2000]);
+ncols = 14;
+nrows = 2;
+for i_var = 1:length(vars_to_eval)
+    try
+        this_var = vars_to_eval{i_var};
+        ex1 = table2array(T(ismember(T.Experiment,experiments{1}) & response ==r, this_var));
+        ex2 = table2array(T(ismember(T.Experiment,experiments{2}) & response ==r, this_var));
+        % do stats
+        [~, p]=ttest2(ex2, ex1);
+        subplot(nrows, ncols, i_var)
+        errorbar([1,2],[nanmean(ex1), nanmean(ex2)], [sem(ex1), sem(ex2)], 'LineStyle','none', 'Marker','o', 'MarkerFaceColor','auto')
+        xlim([0,3])
+        xticks([1,2])
+        xticklabels(experiments)
+        text(1.5, mean([nanmean(ex1), nanmean(ex2)]), num2str(p))
+        title(this_var)
+    catch ME
+        disp(ME.message)
+        continue
+    end
+end
+
 
