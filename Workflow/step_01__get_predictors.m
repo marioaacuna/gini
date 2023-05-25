@@ -18,7 +18,7 @@ close all
 
 %% Init variables
 save_fig = 0 ; % Whether or not save the figures as pdf in the 
-save_predictors = 1; % Whether or not save the Index
+save_predictors = 0; % Whether or not save the Index
 n_predictors = 5; % Number of predictors used to generate the Index
 
 %%
@@ -67,28 +67,45 @@ figure_predictors = figure('Color','w');
 is_zero = imp_sorted==0;
 estimates = imp_sorted(~is_zero);
 norm_estimates = estimates / max(estimates);
-
-
 pred_names = tree_1.PredictorNames(sorted_idx);
 pred_names = pred_names(~is_zero);
+
+%%%%%% NEW %%%%%%
+% determnine which variables give significant results
+S = [];
+for ipred = 1:numel(pred_names)
+    this_predictor = pred_names{ipred};
+
+    is_p = ttest2(T.(this_predictor)(ismember(T.Label, 1)), T.(this_predictor)(ismember(T.Label, 0)));
+    S(ipred) = is_p;
+
+
+end
+significant_predictors = pred_names(logical(S));
+
+
+
+
 % Save all predcitors
 TREE_predictors = struct();
 TREE_predictors.estimates = estimates;
 TREE_predictors.norm_estimates = norm_estimates;
 TREE_predictors.pred_names = pred_names;
+TREE_predictors.significant_predictors = significant_predictors;
+TREE_predictors.S = logical(S);
+
 pred_filename = fullfile(GC.raw_data_folder, 'out', 'TREE_predictors.mat');
 
 save(pred_filename, "TREE_predictors")
 
-
-
-barh(norm_estimates);
+barh(norm_estimates(logical(S)));
 title('Predictor Importance Estimates');
 xlabel('Estimates');
 ylabel('Predictors');
 h = gca;
 
-yticks([1:length( pred_names)])
+pred_names = pred_names(logical(S));
+yticks([1:length(pred_names)])
 h.YTickLabel = pred_names;
 % h.XTickLabelRotation = 45;
 h.TickLabelInterpreter = 'none';
@@ -102,11 +119,7 @@ if save_fig
 end
 
 %% Get BEST predictors
-[~, idx] =sort(norm_estimates, 'descend');
-
-
-
-
+[~, idx] =sort(norm_estimates(logical(S)), 'descend');
 
 best_predictors = pred_names(idx(1:n_predictors));
 best_pred_vals = norm_estimates(idx(1:n_predictors));
