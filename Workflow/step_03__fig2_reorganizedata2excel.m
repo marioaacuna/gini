@@ -34,9 +34,9 @@ for il = 1:length(labels)
         % init experiment
         this_exp = experiments{iex};
         this_data = T(ismember(T.Experiment, this_exp) & ismember(T.LabelPrediction, this_label),:);
-        writetable(this_data, filename, "Sheet",this_exp)
-    
+        writetable(this_data, filename, "Sheet",this_exp, 'WriteMode', 'overwritesheet')
     end
+   
     
 
 
@@ -44,4 +44,4 @@ for il = 1:length(labels)
 end
 
 
-
+ disp('done reorganization')

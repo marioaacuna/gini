@@ -51,7 +51,7 @@ T_use = T_new(:,vars_to_eval);
 %%
 is_b = response == 1;
 is_a = response==0;
-
+neurons_to_take = {'a','b'};
 data = T_use;
 x_basal_b = data.MaxH(is_b);
 y_basal_b = data.MaxV(is_b);
