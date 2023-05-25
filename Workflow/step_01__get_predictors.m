@@ -67,13 +67,27 @@ figure_predictors = figure('Color','w');
 is_zero = imp_sorted==0;
 estimates = imp_sorted(~is_zero);
 norm_estimates = estimates / max(estimates);
+
+
+pred_names = tree_1.PredictorNames(sorted_idx);
+pred_names = pred_names(~is_zero);
+% Save all predcitors
+TREE_predictors = struct();
+TREE_predictors.estimates = estimates;
+TREE_predictors.norm_estimates = norm_estimates;
+TREE_predictors.pred_names = pred_names;
+pred_filename = fullfile(GC.raw_data_folder, 'out', 'TREE_predictors.mat');
+
+save(pred_filename, "TREE_predictors")
+
+
+
 barh(norm_estimates);
 title('Predictor Importance Estimates');
 xlabel('Estimates');
 ylabel('Predictors');
 h = gca;
-pred_names = tree_1.PredictorNames(sorted_idx);
-pred_names = pred_names(~is_zero);
+
 yticks([1:length( pred_names)])
 h.YTickLabel = pred_names;
 % h.XTickLabelRotation = 45;
@@ -89,6 +103,7 @@ end
 
 %% Get BEST predictors
 [~, idx] =sort(norm_estimates, 'descend');
+
 
 
 

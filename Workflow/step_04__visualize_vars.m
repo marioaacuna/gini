@@ -5,7 +5,7 @@ clear, clc
 global GC
 %%
 r = 1; % type of neuron (1 , 0)
-table_filename = fullfile(GC.raw_data_folder,'out', "input_with_predicted_lables.xlsx");
+table_filename = fullfile(GC.raw_data_folder,'out', "input_with_predicted_lables_NaiveBayes_5preds.xlsx");
 % Read table
 addpath(fullfile(pwd, '\Code\Utilities\Statistics'))
 T = readtable(table_filename);
