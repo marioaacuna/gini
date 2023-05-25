@@ -1,12 +1,12 @@
 % This script is designed to evaluate neurons that were collected by
 % tracing - so far from the cACC and from the PAG (dl and vl).
-% We first calculate an idex, based on the most important features. Which
+% We first calculate an index, based on the most important features. Which
 % is then used for the threshold calculation
 % 
 %   - compute the feature importance based on fit tree 
 %   - Compute the Index values and set threshold
 %   * So far we only use this threshold for the classification (saved in 
-%   the predictor structure). Tjhis is later passed to evaluate new cells
+%   the predictor structure). This is later passed to evaluate new cells
 %   This is still in beta version. Additionally:
 %   - compute PCA form the data set.
 %
@@ -17,12 +17,13 @@ clc
 close all
 
 %% Init variables
-save_fig = 0 ;
-save_predictors = 1;
-n_predictors = 2;
+save_fig = 0 ; % Whether or not save the figures as pdf in the 
+save_predictors = 1; % Whether or not save the Index
+n_predictors = 5; % Number of predictors used to generate the Index
+
+%%
 FP = figure_properties();
 type_experiment = 'retro';
-
 color_a = FP.colors.groups.a;
 color_b = FP.colors.groups.b;
 
@@ -83,13 +84,15 @@ fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_predictors_retro_
 %% save fig
 if save_fig
     export_fig(fig_filename, '-pdf', '-q101', '-nocrop', '-painters',figure_predictors); close(figure_predictors)
-    disp('Figure Predictor saved')
+    fprintf('Figure saved in %s \n',fig_filename)
 end
 
 %% Get BEST predictors
 [~, idx] =sort(norm_estimates, 'descend');
 
-% take the 2-3 highest predictors
+
+
+
 best_predictors = pred_names(idx(1:n_predictors));
 best_pred_vals = norm_estimates(idx(1:n_predictors));
 data_to_use_for_index = T_new(:, best_predictors);
@@ -153,7 +156,8 @@ predictors.weights = best_pred_vals;
 predictors.names = best_predictors;
 predictors.threshold = THR_AUROC;
 if save_predictors
-    save(predictors_filename, 'predictors'); disp('Predictors saved')
+    save(predictors_filename, 'predictors'); 
+    fprintf('Predictors saved in %s \n',predictors_filename)
 end
 
 % Plot form indexes
@@ -169,7 +173,7 @@ hold off
 fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_INDEX_predictors_retro_PAG.pdf');
 if save_fig
     export_fig(fig_filename, '-pdf', '-q101', '-nocrop', '-painters',fpca); close(fpca)
-    disp('Fig index saved')
+    fprintf('Figure Index saved in %s \n',fig_filename)
 end
 
 
@@ -195,7 +199,7 @@ ylabel('PC2')
 fig_filename = os.path.join(GC.plot_path, type_experiment,'fig_PCA_all_predictors_retro_PAG.pdf');
 if save_fig
     export_fig(fig_filename, '-pdf', '-q101', '-nocrop', '-painters',fpca); close(fpca)
-    disp('Fig PCA on all stimators')
+    fprintf('Figure PCA_all_predictors saved in %s \n',fig_filename)
 end
 
 %% run pca to determine threshold -> Not necessary anymore

@@ -1,6 +1,6 @@
 % evaluate from new blind obtained data
 clear, clc
-
+addpath(fullfile(pwd,'\Code\Utilities\Algorithms'))
 global GC
 %% analyse Blind-obtained neurons
 % table_filename = os.path.join(GC.raw_data_folder, 'Only_saline_data.xlsx');
@@ -20,7 +20,11 @@ threshold = GC.threshold_depth_L5; % Thomas' paper
 T(T.Depth < threshold, :) =[];
 T_new = T;
 % make sure some nan values are set to 0 (not present)
-T_new.ICAmp(isnan(T_new.ICAmp))= 0;
+try
+    T_new.ICAmp(isnan(T_new.ICAmp))= 0;
+catch
+    fprintf('ICAmp not present')
+end
 % TODO: complete the burst data
 
 %T_new.Burst(isnan(T_new.Burst)) = 0;
@@ -42,14 +46,15 @@ response = double(ismember(original_labels(~isnan_idx), 'b'));
 %% Get indexes
 indexes = calculate_indexes(predictors, T_use);
 class_threshold = predictors.threshold;
+is_1 = double(indexes>class_threshold);
 
-figure, gscatter(indexes, repmat(1, size(indexes)), response, [], 'o')
+% figure, gscatter(indexes, repmat(1, size(indexes)), response, [], 'o')
+figure, gscatter(indexes, repmat(1, size(indexes)), double(is_1), [], 'o')
 hold on
 plot([class_threshold,class_threshold   ], [0,2], '--')
 hold off
 
 
-is_1 = double(indexes>class_threshold);
 
 %% Test performance
 % response = original_labels(~isnan_idx);

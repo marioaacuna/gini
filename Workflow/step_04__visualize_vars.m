@@ -7,6 +7,7 @@ global GC
 r = 1; % type of neuron (1 , 0)
 table_filename = fullfile(GC.raw_data_folder,'out', "input_with_predicted_lables.xlsx");
 % Read table
+addpath(fullfile(pwd, '\Code\Utilities\Statistics'))
 T = readtable(table_filename);
 
 % get neurons only in L5
@@ -14,14 +15,16 @@ threshold = GC.threshold_depth_L5; % Thomas' paper
 T(T.Depth < threshold, :) =[];
 T_new = T;
 % make sure some nan values are set to 0 (not present)
-T_new.ICAmp(isnan(T_new.ICAmp))= 0;
+% clT_new.ICAmp(isnan(T_new.ICAmp))= 0;
 % TODO: complete the burst data
 
 %T_new.Burst(isnan(T_new.Burst)) = 0;
-response = T_new.Label;
-if any(ismember(response, 'a'))
-    response = double(ismember(response, 'b'));
-end
+% response = T_new.Label;
+% if any(ismember(response, 'a'))
+%     response = double(ismember(response, 'b'));
+% end
+
+response = double(T_new.LabelPrediction);
 % vars_to_eval = GC.variables_to_evaluate;
 vars_to_eval  = GC.variables_to_evaluate;
 experiments = {'CFA d7',...
