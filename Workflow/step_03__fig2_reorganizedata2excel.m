@@ -9,7 +9,7 @@ clc
 global GC
 
 %% Read input table
-table_filename = fullfile(GC.raw_data_folder,'out',"input_with_predicted_lables.xlsx");
+table_filename = fullfile(GC.raw_data_folder,'out',"input_with_predicted_lables_LR_signif_preds.xlsx");
 T = readtable(table_filename);
 %% Categorize the different groups
 % get the variables
