@@ -1,7 +1,7 @@
 clc
 clear
 global GC
-
+addpath('Code\Utilities\Statistics')
 % save filename
 T_filename = fullfile(GC.raw_data_folder,'out', ['Re-organization_Mdl_LR_Signif_preds.xlsx']);
 
@@ -83,7 +83,13 @@ for iex = 1:numel(Experiments)
 
 end
 
+
+%% Write Reorganized table
+
+step_03__fig2_reorganizedata2excel_from_Mdl(T_all)
+
 fprintf('done writing in %s\n\n ', T_filename)
+%%
 
 %% Check quick stats for neurons 1
 
@@ -102,7 +108,7 @@ L = mdl.predictFcn(pcaD);
 figure, gscatter(pcaD(:,1), pcaD(:,2), L);
 
 %% check quickly stats for AP_thr
-to_take = 'InputR';%'APThreshold'; 'SpikeCount'
+to_take = 'SpikeCount';%'APThreshold'; 'SpikeCount'
 data_groups = {'CFA d7NS', 'Saline d7NS'};
 
 
