@@ -60,7 +60,7 @@ for iex = 1:numel(Experiments)
     % impute using KNN
     imputed = knnimpute(this_array);
     % write down the number back to the table
-    this_T = [array2table(imputed,'VariableNames',best_predictors), not_best];
+    this_T = [not_best,array2table(imputed,'VariableNames',best_predictors)];
     d = imputed;
     % isnan_idx = sum(isnan(this_array), 2) >0;
     % d = this_array(~isnan_idx,:);
@@ -102,7 +102,7 @@ L = mdl.predictFcn(pcaD);
 figure, gscatter(pcaD(:,1), pcaD(:,2), L);
 
 %% check quickly stats for AP_thr
-to_take = 'APThreshold';%'APThreshold'; 'SpikeCount'
+to_take = 'InputR';%'APThreshold'; 'SpikeCount'
 data_groups = {'CFA d7NS', 'Saline d7NS'};
 
 
@@ -116,6 +116,7 @@ data_cfa = TD_all.(to_take)(is_cfa);
 data_saline = TD_all.(to_take)(is_sal);
 
 [~, p] = ttest2(data_cfa, data_saline)
+%%
 
 zTD = zscore(table2array(T_all(:, best_predictors)))
 pcaTD = do_pca_gini(zTD, best_pred_vals);
