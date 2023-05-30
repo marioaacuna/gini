@@ -1,5 +1,6 @@
 clc
 clear
+close all
 global GC
 addpath('Code\Utilities\Statistics')
 % save filename
