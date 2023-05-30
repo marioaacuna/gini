@@ -34,7 +34,10 @@ for il = 1:length(labels)
     lab_idx = T.Mdl_predictors == this_label;
 
     experiments = unique(T.Experiment);
-    % Loop through the experiments
+    if any(ismember(experiments, {'','Experiment'}))
+        experiments(ismember(experiments, {'','Experiment'})) = [];
+    end
+        % Loop through the experiments)
     for iex = 1:length(experiments)
         % init experiment
         this_exp = experiments{iex};

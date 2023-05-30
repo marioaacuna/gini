@@ -112,19 +112,19 @@ fprintf('done writing in %s\n\n ', T_filename)
 % figure, gscatter(pcaD(:,1), pcaD(:,2), L);
 
 %% check quickly stats for AP_thr
-% to_take = 'SpikeCount';%'APThreshold'; 'SpikeCount'
+% to_take = 'InputR';%'APThreshold'; 'SpikeCount'
 % data_groups = {'CFA d7NS', 'Saline d7NS'};
-%
-%
+% 
+% 
 % TD_all = (T_all(:,[best_predictors,'Experiment', 'Mdl_predictors', 'APThreshold']));
 % T_group = TD_all(ismember(TD_all.Experiment, data_groups),:);
 % is_1 = TD_all.Mdl_predictors == 1;
 % is_cfa = (ismember(TD_all.Experiment, data_groups{1}) & is_1);
 % is_sal = (ismember(TD_all.Experiment, data_groups{2})& is_1);
-%
+% 
 % data_cfa = TD_all.(to_take)(is_cfa);
 % data_saline = TD_all.(to_take)(is_sal);
-%
+% 
 % [~, p] = ttest2(data_cfa, data_saline)
 %%
 

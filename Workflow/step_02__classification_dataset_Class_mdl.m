@@ -128,9 +128,18 @@ end
 T_pred_to_use = T_pred;
 pred= table2array(T_pred_to_use(:, pred_names));
 
-is_nan_idx = sum(isnan(pred),2) >0;
-pred = pred(~is_nan_idx,:);
-pred_z = zscore(pred);
+
+% % impute using KNN
+imputed = knnimpute(pred');
+imputed = imputed';
+is_nan_idx = false(size(imputed,1),1);
+% write down the number back to the table
+% this_T = [not_best,array2table(imputed,'VariableNames',best_predictors)];
+d = imputed;
+
+% is_nan_idx = sum(isnan(pred),2) >0;
+% d = pred(~is_nan_idx,:);
+pred_z = zscore(d);
 pred_pca = do_pca_gini(pred_z, norm_estimates);
 % pred_pca = pca(pred_z', "NumComponents",2, 'Algorithm','svd', 'Centered',false,'Weights', best_pred_vals);
 figure, scatter(pred_pca(:,1), pred_pca(:,2))
