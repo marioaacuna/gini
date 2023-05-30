@@ -27,6 +27,9 @@ for il = 1:length(labels)
     % init label
     this_label = labels(il);
     filename = fullfile(GC.raw_data_folder,'out', ['Re-organization_', num2str(this_label), '.xlsx']);
+    if exist(filename, 'file')
+        delete(filename)
+    end
     % it will get all the data for this label
     lab_idx = T.Mdl_predictors == this_label;
 
