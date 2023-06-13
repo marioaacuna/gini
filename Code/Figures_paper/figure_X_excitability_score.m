@@ -5,7 +5,10 @@
 % could get an excitability score to then compare accross groups
 
 %% Load retro and input table
-excitability_vars = {'InputR', 'APThreshold', 'SpikeCount'};
+label_to_eval = 1; % or 0
+
+
+excitability_vars = {'InputR', 'APThreshold', 'SpikeCount', 'SAG', 'ADP', 'Tau'};
 
 table_filename = fullfile(GC.raw_data_folder, 'in','Retro_ACC_PAG.xlsx');
 
@@ -21,7 +24,7 @@ T_new = T;
 vars_to_take = ['Label', excitability_vars];
 T_retro = T_new(:,ismember(T_new.Properties.VariableNames, vars_to_take));
 T_retro.Experiment = repmat({'Naive'},height(T_retro),1 );
-
+T_retro = T_retro(ismember(T_retro.Label, label_to_eval),:);
 %% Load input
 table_filename = fullfile(GC.raw_data_folder,'out', "input_with_predicted_lables_LR_Signif_preds_grouped.xlsx");
 
@@ -44,21 +47,36 @@ isnan_idx = isnan(table2array(T_total(:,'InputR'))) | (isnan(table2array(T_total
 % delete the nan entries
 T_total(isnan_idx,:) = [];
 % z_data_ephys = [zscore(table2array(T_total(~isnan_idx,'InputR'))), -zscore(table2array(T_total(~isnan_idx,'APThreshold')))];% 1: InputR, 2: APThr
-% z_data_ephys = [zscore(table2array(T_total(:,'InputR'))), -zscore(table2array(T_total(:,'APThreshold'))), zscore(table2array(T_total(:,'SpikeCount')))];% 1: InputR, 2: APThr
+if any(isnan(zscore(table2array(T_total(:,'SpikeCount')))))
+    % in case of taking spike count with nan values:
+    spkdata =table2array(T_total(:,'SpikeCount'));
+    zscore_spk = (spkdata - nanmean(spkdata)) / nanstd(spkdata);
 
-% in case of taking spike count with nan values:
-spkdata =table2array(T_total(:,'SpikeCount'));
-zscore_spk = (spkdata - nanmean(spkdata)) / nanstd(spkdata);
-z_data_ephys = [zscore(table2array(T_total(:,'InputR'))), -zscore(table2array(T_total(:,'APThreshold'))), zscore_spk];% 1: InputR, 2: APThr
+else
+    zscore_spk = zscore(table2array(T_total(:,'SpikeCount')));
+    % z_data_ephys = [zscore(table2array(T_total(:,'InputR'))), -zscore(table2array(T_total(:,'APThreshold'))), zscore(table2array(T_total(:,'SpikeCount')))];% 1: InputR, 2: APThr
+end
+
+z_data_ephys = [...
+    zscore(table2array(T_total(:,'InputR'))), ...
+    -zscore(table2array(T_total(:,'APThreshold'))),...
+    -zscore(table2array(T_total(:,'Tau'))),...
+    zscore(table2array(T_total(:,'ADP'))),...
+    zscore(table2array(T_total(:,'SAG'))),...
+    zscore_spk,...
+
+    ];% 1: InputR, 2: APThr
+
+
+
 
 % compute the excitability score based on the average of the ex variables
-ex_score = nansum(z_data_ephys,2);
+ex_score = nanmedian(z_data_ephys,2);
 %% add it to the table 
 T_total.Excitability = ex_score;
 
 
 %% Evaluate scores
-label_to_eval = 1; % or 0
 % T_total.Label = categorical(T_total.Label);
 % T_total.Experiment = categorical(T_total.Experiment);
 
@@ -109,6 +127,8 @@ title('SC neurons')
 %% quick check
 idx_sald1 =find(ismember(experiments, 'Saline d1'));
 idx_sald7 =find(ismember(experiments, 'Saline d7'));
+idx_sald7NS =find(ismember(experiments, 'Saline d7NS'));
+
 idx_cfad1 =find(ismember(experiments, 'CFA d1'));
 idx_cfad7 =find(ismember(experiments, 'CFA d7'));
 idx_cfad7NS = find(ismember(experiments, 'CFA d7NS'));
@@ -120,6 +140,13 @@ ttest2(new_data_all(ismember(idx_all, idx_naive)), new_data_all(ismember(idx_all
 ttest2(new_data_all(ismember(idx_all, idx_naive)), new_data_all(ismember(idx_all, idx_cfad7NS)))
 [~, p]=ttest2(new_data_all(ismember(idx_all, idx_cfad7)), new_data_all(ismember(idx_all, idx_cfad7NS)))
 ttest2(new_data_all(ismember(idx_all, idx_naive)), new_data_all(ismember(idx_all, idx_cfad1)))
+ttest2(new_data_all(ismember(idx_all, idx_cfad7)), new_data_all(ismember(idx_all, idx_cfad1)))
+[~, p]=ttest2(new_data_all(ismember(idx_all, idx_cfad7NS)), new_data_all(ismember(idx_all, idx_sald7NS)))
+
+ttest2(new_data_all(ismember(idx_all, idx_sald7)), new_data_all(ismember(idx_all, idx_sald1)))
+[~, p]=ttest2(new_data_all(ismember(idx_all, idx_sald7)), new_data_all(ismember(idx_all, idx_sald7NS)))
+
+
 
 
  [p]=wilcoxon_ranksum(new_data_all(ismember(idx_all, idx_cfad7)), new_data_all(ismember(idx_all, idx_cfad7NS)))
