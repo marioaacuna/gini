@@ -1,0 +1,62 @@
+tasks:
+  - name: "Assess Classifier Robustness Under Inflammatory Conditions"
+    description: "Analyze how the classifier performs under post-CFA conditions, focusing on morphological and physiological features that remain constant versus those that change."
+    deadline: "2023-12-01"
+    status: "pending"
+    scripts:
+      - "robustnessAnalysis.m"
+      - "featureChangeComparison.m"
+  
+  - name: "Downsampling and Bootstrap Analysis for Day 1 Post-CFA Data"
+    description: "Perform downsampling of day 1 post-CFA data to match the sample size of day 7 data, followed by bootstrap analysis to assess statistical power and potential false negatives."
+    deadline: "2023-12-15"
+    status: "pending"
+    scripts:
+      - "downsampleData.m"
+      - "bootstrapAnalysis.m"
+  
+  - name: "Correlation Analysis between Electrophysiology/Morphology and Behavioral Data"
+    description: "Compare electrophysiology and morphology data of ACC SC neurons from different projection sites (dl/lPAG vs vlPAG) and relate them to behavioral outcomes to clarify potential discrepancies."
+    deadline: "2024-01-10"
+    status: "pending"
+    scripts:
+      - "correlationAnalysis.m"
+      - "behavioralDataComparison.m"
+  
+  - name: "Classifier Validation with CNO Control Data"
+    description: "Use the CNO baseline (saline) data to test the classifier, particularly focusing on neurons from figures S18 & S19, to verify its accuracy in different experimental conditions."
+    deadline: "2024-01-25"
+    status: "pending"
+    scripts:
+      - "classifierValidationCNO.m"
+      - "accuracyTestS18S19.m"
+
+  - name: "Sensitivity Analysis of Post-CFA Neuronal Features"
+    description: "Investigate how specific morphological and electrophysiological features of neurons are affected by CFA-induced inflammation and how this influences classifier performance."
+    deadline: "2024-02-15"
+    status: "pending"
+    scripts:
+      - "featureSensitivityAnalysis.m"
+      - "inflammationImpactAssessment.m"
+
+  - name: "Re-calibration of Classifier with Augmented Data"
+    description: "Augment the existing dataset to simulate post-CFA conditions and re-calibrate the classifier, followed by testing it on a separate validation subset."
+    deadline: "2024-03-01"
+    status: "pending"
+    scripts:
+      - "dataAugmentation.m"
+      - "classifierRecalibration.m"
+
+  - name: "Statistical Comparison Pre and Post Classifier Adjustment"
+    description: "Compare the performance metrics (accuracy, precision, etc.) of the classifier before and after adjustments made using augmented data."
+    deadline: "2024-03-15"
+    status: "pending"
+    scripts:
+      - "performanceMetricsComparison.m"
+
+  - name: "Detailed Discussion and Analysis of Classifier Performance"
+    description: "Prepare a detailed analysis and discussion section for the manuscript, explaining how the existing data was utilized to address the reviewer's concerns, highlighting limitations and assumptions."
+    deadline: "2024-04-01"
+    status: "pending"
+    scripts:
+      - "manuscriptAnalysisDiscussion.m"
