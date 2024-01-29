@@ -9,9 +9,9 @@ function [cvs, noise_factors] = calculateCVandNoiseFactors(data, noise_factor_fr
     % Apply the noise_factor_fraction to calculate noise factors
     noise_factors = cvs * noise_factor_fraction;
 
-    % Display the results
-    disp('Coefficient of Variation (CV) for each feature:');
-    disp(cvs);
-    disp('Suggested noise factors for each feature:');
-    disp(noise_factors);
+    % % Display the results
+    % disp('Coefficient of Variation (CV) for each feature:');
+    % disp(cvs);
+    % disp('Suggested noise factors for each feature:');
+    % disp(noise_factors);
 end
